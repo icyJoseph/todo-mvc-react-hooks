@@ -8,6 +8,7 @@
     "react-scripts": "2.1.5"
   },
   "scripts": {
+    "deploy": "yarn build && surge --domain https://lethal-soup.surge.sh --project ./build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
