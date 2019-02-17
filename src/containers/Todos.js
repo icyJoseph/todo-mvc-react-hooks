@@ -1,127 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { findAndReplace } from "./utils";
-
-const ENTER_KEY = 13;
-const ESCAPE_KEY = 27;
-const ALL_TODOS = "All";
-const TODOS = "Todos";
-const ACTIVE_TODOS = "Active";
-const SELECTED = "selected";
-const COMPLETED_TODOS = "Completed";
-const NONE = "";
-
-function TodoFooter({
-  changeShownTodos,
-  nowShowing,
-  completedCount,
-  count,
-  onClearCompleted
-}) {
-  return (
-    <footer className="footer">
-      <span className="todo-count">
-        <strong>{count}</strong> {TODOS} left
-      </span>
-      <ul className="filters">
-        <li>
-          <button
-            className={nowShowing === ALL_TODOS ? SELECTED : NONE}
-            onClick={() => changeShownTodos(ALL_TODOS)}
-          >
-            All
-          </button>
-        </li>{" "}
-        <li>
-          <button
-            className={nowShowing === ACTIVE_TODOS ? SELECTED : NONE}
-            onClick={() => changeShownTodos(ACTIVE_TODOS)}
-          >
-            Active
-          </button>
-        </li>{" "}
-        <li>
-          <button
-            className={nowShowing === COMPLETED_TODOS ? SELECTED : NONE}
-            onClick={() => changeShownTodos(COMPLETED_TODOS)}
-          >
-            Completed
-          </button>
-        </li>
-      </ul>
-      {!!completedCount && (
-        <button className="clear-completed" onClick={onClearCompleted}>
-          Clear completed
-        </button>
-      )}
-    </footer>
-  );
-}
-
-function TodoItem({
-  todo,
-  onToggle,
-  onDestroy,
-  onEdit,
-  editing,
-  onSave,
-  onCancel
-}) {
-  const [editText, setEditText] = useState("");
-
-  const handleEdit = () => {
-    onEdit();
-    setEditText(todo.title);
-  };
-
-  const handleSubmit = e => {
-    const newTitle = editText.trim();
-    if (newTitle) {
-      onSave({ title: newTitle });
-      return setEditText(newTitle);
-    }
-    return onDestroy();
-  };
-
-  const handleKeyDown = e => {
-    if (e.which === ESCAPE_KEY) {
-      setEditText(todo.title);
-      return onCancel();
-    }
-    return e.which === ENTER_KEY && handleSubmit(e);
-  };
-
-  const handleChange = e => {
-    if (editing) {
-      return setEditText(e.target.value);
-    }
-  };
-
-  return (
-    <li
-      className={`${todo.completed ? "completed" : NONE} ${
-        editing ? "editing" : NONE
-      }`}
-    >
-      <div className="view">
-        <input
-          className="toggle"
-          type="checkbox"
-          checked={todo.completed}
-          onChange={onToggle}
-        />
-        <label onDoubleClick={handleEdit}>{todo.title}</label>
-        <button className="destroy" onClick={onDestroy} />
-      </div>
-      <input
-        className="edit"
-        value={editText}
-        onBlur={handleSubmit}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-    </li>
-  );
-}
+import TodoItem from "./TodoItem";
+import TodoFooter from "./TodoFooter";
+import { findAndReplace } from "../utils";
+import { ENTER_KEY, ALL_TODOS, ACTIVE_TODOS } from "../constants";
 
 export function TodoMVC() {
   const [editing, setEditing] = useState(null);
@@ -254,4 +135,4 @@ export function TodoMVC() {
   );
 }
 
-export default TodoMVC;
+export default React.memo(TodoMVC);
