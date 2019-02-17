@@ -7,16 +7,23 @@ import { findAndReplace } from "../utils";
 import { TODOS, ENTER_KEY, ALL_TODOS, ACTIVE_TODOS } from "../constants";
 
 export function TodoMVC() {
+  // editing state and setter
   const [editing, setEditing] = useState(null);
+  // provide a closure to attach to every todo
   const editingTodo = ({ id }) => () => setEditing(id);
 
+  // category of todo's being shown
   const [nowShowing, setShowing] = useState(ALL_TODOS);
+  // provide a closure to attach to the category buttons
   const changeShowing = label => () => setShowing(label);
 
+  // get and set on localStorage a TODOS key, default to empty array
   const [localStorageTodos, saveToLocalStorage] = useLocalStorage(TODOS, []);
 
+  // the actual todos and the function to set them!
   const [todos, modifyTodos] = useState(localStorageTodos);
 
+  // the state of the main input, used to create a new todo
   const [newTodo, setNewTodo] = useState("");
 
   const toggleAll = e => {

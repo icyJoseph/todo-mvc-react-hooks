@@ -9,11 +9,11 @@ export function Credit() {
       </a>{" "}
       project was Created by{" "}
       <a
-        href="https://github.com/petehunt"
+        href="hhttps://github.com/tastejs/todomvc"
         target="_blank"
         rel="noopener noreferrer"
       >
-        petehunt
+        tastejs
       </a>
       .
       <br />
