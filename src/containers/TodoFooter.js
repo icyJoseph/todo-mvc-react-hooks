@@ -24,9 +24,8 @@ export function TodoFooter({
       </span>
       <ul className="filters">
         {TodoCategories.map(label => (
-          <li>
+          <li key={label}>
             <Button
-              key={label}
               label={label}
               clickHandler={changeShownTodos(label)}
               cls={nowShowing === label ? SELECTED : NONE}
