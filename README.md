@@ -12,4 +12,4 @@ This version uses React Hooks to manage the state of the Todo MVC application.
 
 This project aims to use different types of hooks to implement the Todo MVC.
 
-Currently it uses useState and useEffect, as well as a custom hook to save to local storage.
+Currently it uses `useState` and `useEffect`, as well as a custom hook to save to local storage, named `useLocalStorage`.
