@@ -2,8 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import TodoItem from "./TodoItem";
 import TodoFooter from "./TodoFooter";
 import Credit from "./Credit";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { findAndReplace } from "../utils";
-import { ENTER_KEY, ALL_TODOS, ACTIVE_TODOS } from "../constants";
+import { TODOS, ENTER_KEY, ALL_TODOS, ACTIVE_TODOS } from "../constants";
 
 export function TodoMVC() {
   const [editing, setEditing] = useState(null);
@@ -12,7 +13,11 @@ export function TodoMVC() {
   const [nowShowing, setShowing] = useState(ALL_TODOS);
   const changeShowing = label => () => setShowing(label);
 
-  const [todos, modifyTodos] = useState([]);
+  const [localStorageTodos, saveToLocalStorage] = useLocalStorage(TODOS, []);
+
+  console.log(localStorageTodos);
+  const [todos, modifyTodos] = useState(localStorageTodos);
+
   const [newTodo, setNewTodo] = useState("");
 
   const toggleAll = e => {
@@ -43,6 +48,7 @@ export function TodoMVC() {
     );
 
   useEffect(() => {
+    saveToLocalStorage(todos);
     setNewTodo("");
   }, [todos]);
 
