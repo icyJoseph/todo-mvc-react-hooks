@@ -9,7 +9,7 @@ export function TodoMVC() {
   const editingTodo = ({ id }) => () => setEditing(id);
 
   const [nowShowing, setShowing] = useState(ALL_TODOS);
-  const changeShowing = show => setShowing(show);
+  const changeShowing = label => () => setShowing(label);
 
   const [todos, modifyTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");

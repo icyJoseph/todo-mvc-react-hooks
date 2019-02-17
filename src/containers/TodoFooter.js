@@ -28,7 +28,7 @@ export function TodoFooter({
             <Button
               key={label}
               label={label}
-              clickHandler={() => changeShownTodos(label)}
+              clickHandler={changeShownTodos(label)}
               cls={nowShowing === label ? SELECTED : NONE}
             />
           </li>
