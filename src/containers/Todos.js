@@ -35,7 +35,7 @@ export function TodoMVC() {
     return modifyTodos(updatedTodos);
   };
 
-  const activeTodoCount = todos.filter(todo => todo.completed).length;
+  const activeTodoCount = todos.filter(todo => !todo.completed).length;
 
   const clearCompleted = () =>
     modifyTodos(todos.filter(todo => !todo.completed));
