@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import TodoItem from "./TodoItem";
 import TodoFooter from "./TodoFooter";
+import Credit from "./Credit";
 import { findAndReplace } from "../utils";
 import { ENTER_KEY, ALL_TODOS, ACTIVE_TODOS } from "../constants";
 
@@ -84,54 +85,59 @@ export function TodoMVC() {
   const showFooter = !!activeTodoCount || !!completedCount;
 
   return (
-    <div className="todoapp">
-      <header className="header">
-        <h1>todos</h1>
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          value={newTodo}
-          onKeyDown={handleNewTodoKeyDown}
-          onChange={handleChange}
-          autoFocus={true}
-        />
-      </header>
-      {!!todos.length && (
-        <section className="main">
+    <Fragment>
+      <div className="todoapp">
+        <header className="header">
+          <h1>todos</h1>
           <input
-            id="toggle-all"
-            className="toggle-all"
-            type="checkbox"
-            onChange={toggleAll}
-            checked={activeTodoCount === 0}
+            className="new-todo"
+            placeholder="What needs to be done?"
+            value={newTodo}
+            onKeyDown={handleNewTodoKeyDown}
+            onChange={handleChange}
+            autoFocus={true}
           />
-          <label htmlFor="toggle-all" />
-          <ul className="todo-list">
-            {shownTodos.map(todo => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                onToggle={toggle(todo)}
-                onDestroy={destroy(todo)}
-                onEdit={editingTodo(todo)}
-                editing={editing === todo.id}
-                onSave={save(todo)}
-                onCancel={editingTodo({ id: null })}
-              />
-            ))}
-          </ul>
-        </section>
-      )}
-      {showFooter && (
-        <TodoFooter
-          changeShownTodos={changeShowing}
-          count={activeTodoCount}
-          completedCount={completedCount}
-          nowShowing={nowShowing}
-          onClearCompleted={clearCompleted}
-        />
-      )}
-    </div>
+        </header>
+        {!!todos.length && (
+          <section className="main">
+            <input
+              id="toggle-all"
+              className="toggle-all"
+              type="checkbox"
+              onChange={toggleAll}
+              checked={activeTodoCount === 0}
+            />
+            <label htmlFor="toggle-all" />
+            <ul className="todo-list">
+              {shownTodos.map(todo => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onToggle={toggle(todo)}
+                  onDestroy={destroy(todo)}
+                  onEdit={editingTodo(todo)}
+                  editing={editing === todo.id}
+                  onSave={save(todo)}
+                  onCancel={editingTodo({ id: null })}
+                />
+              ))}
+            </ul>
+          </section>
+        )}
+        {showFooter && (
+          <TodoFooter
+            changeShownTodos={changeShowing}
+            count={activeTodoCount}
+            completedCount={completedCount}
+            nowShowing={nowShowing}
+            onClearCompleted={clearCompleted}
+          />
+        )}
+      </div>
+      <footer className="info">
+        <Credit />
+      </footer>
+    </Fragment>
   );
 }
 
