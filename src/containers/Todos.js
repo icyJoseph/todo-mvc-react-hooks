@@ -15,7 +15,6 @@ export function TodoMVC() {
 
   const [localStorageTodos, saveToLocalStorage] = useLocalStorage(TODOS, []);
 
-  console.log(localStorageTodos);
   const [todos, modifyTodos] = useState(localStorageTodos);
 
   const [newTodo, setNewTodo] = useState("");
