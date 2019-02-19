@@ -8,7 +8,7 @@ The [Todo MVC](http://todomvc.com/) project was created by [tastejs](https://git
 
 This version uses React Hooks to manage the state of the Todo MVC application.
 
-## Growing project
+## A growing project
 
 This project aims to use different types of hooks to implement the Todo MVC.
 
