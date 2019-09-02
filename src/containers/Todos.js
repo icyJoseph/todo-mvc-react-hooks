@@ -18,7 +18,11 @@ export function TodoMVC() {
   const changeShowing = label => () => setShowing(label);
 
   // get and set on localStorage a TODOS key, default to empty array
-  const [localStorageTodos, saveToLocalStorage] = useLocalStorage(TODOS, []);
+  const [localStorageTodos, saveToLocalStorage] = useLocalStorage(
+    TODOS,
+    [],
+    console.log
+  );
 
   // the actual todos and the function to set them!
   const [todos, modifyTodos] = useState(localStorageTodos);
