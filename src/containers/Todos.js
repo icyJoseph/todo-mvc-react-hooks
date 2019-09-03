@@ -18,14 +18,19 @@ export function TodoMVC() {
   const changeShowing = label => () => setShowing(label);
 
   // get and set on localStorage a TODOS key, default to empty array
-  const [localStorageTodos, saveToLocalStorage] = useLocalStorage(
-    TODOS,
-    [],
-    console.log
-  );
+  const [localStorageTodos, saveToLocalStorage] = useLocalStorage(TODOS, []);
 
   // the actual todos and the function to set them!
-  const [todos, modifyTodos] = useState(localStorageTodos);
+  const [todos, _modifyTodos] = useState(localStorageTodos);
+
+  const modifyTodos = todos => {
+    _modifyTodos(todos);
+    saveToLocalStorage(todos);
+  };
+
+  useEffect(() => {
+    _modifyTodos(localStorageTodos);
+  }, [localStorageTodos]);
 
   // the state of the main input, used to create a new todo
   const [newTodo, setNewTodo] = useState("");
@@ -46,18 +51,16 @@ export function TodoMVC() {
 
   const handleChange = e => setNewTodo(e.target.value);
 
-  const handleNewTodoKeyDown = e =>
-    e.keyCode === ENTER_KEY &&
-    modifyTodos(
-      [...todos, { id: Date.now(), title: newTodo, completed: false }].filter(
-        ({ title }) => !!title
-      )
-    );
-
-  useEffect(() => {
-    saveToLocalStorage(todos);
-    setNewTodo("");
-  }, [todos]);
+  const handleNewTodoKeyDown = e => {
+    if (e.keyCode === ENTER_KEY) {
+      modifyTodos(
+        [...todos, { id: Date.now(), title: newTodo, completed: false }].filter(
+          ({ title }) => !!title
+        )
+      );
+      setNewTodo("");
+    }
+  };
 
   const completedCount = todos.filter(todo => todo.completed).length;
 

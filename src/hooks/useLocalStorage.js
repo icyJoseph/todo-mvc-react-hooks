@@ -1,29 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
-const noop = () => {};
-
-export function useLocalStorage(key, fallback = "", onChange = noop) {
+export function useLocalStorage(key, fallback = "") {
   const existingKey = localStorage.getItem(key);
   const init = !!existingKey ? JSON.parse(existingKey) : fallback;
   const [value, setValue] = useState(init);
 
   // content is the new value
-  const modifyValue = content => setValue(content);
 
-  const onChangeRef = useRef();
-  onChangeRef.current = onChange;
+  const setStore = value => localStorage.setItem(key, JSON.stringify(value));
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [value]);
-
-  useEffect(() => {
-    const handler = onChangeRef.current;
+    const handler = e => {
+      setValue(JSON.parse(e.newValue));
+    };
     window.addEventListener("storage", handler);
     return () => window.removeEventListener("storage", handler);
-  });
+  }, []);
 
-  return [value, modifyValue];
+  return [value, setStore];
 }
 
 export default useLocalStorage;
