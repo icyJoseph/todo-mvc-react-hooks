@@ -109,17 +109,16 @@ export function TodoMVC() {
     []
   );
 
-  const save = useCallback(
-    ({ id: todoId }, { title: newTitle }) =>
-      setTodos((prev) =>
-        findAndReplace(
-          prev,
-          ({ id }) => id === todoId,
-          (todo) => ({ ...todo, title: newTitle })
-        )
-      ) && setEditing(null),
-    []
-  );
+  const save = useCallback(({ id: todoId }, { title: newTitle }) => {
+    setTodos((prev) =>
+      findAndReplace(
+        prev,
+        ({ id }) => id === todoId,
+        (todo) => ({ ...todo, title: newTitle })
+      )
+    );
+    setEditing(null);
+  }, []);
 
   const showFooter = !!activeTodoCount || !!completedCount;
 
