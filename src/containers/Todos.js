@@ -81,12 +81,7 @@ export function TodoMVC() {
   // editing state and setter
   const [editing, setEditing] = useState(null);
   // provide a closure to attach to every todo
-  const editingTodo = useCallback(
-    ({ id }) =>
-      () =>
-        setEditing(id),
-    []
-  );
+  const editingTodo = useCallback(({ id }) => setEditing(id), []);
 
   const cancel = useCallback(() => editingTodo({ id: null }), [editingTodo]);
 
@@ -116,14 +111,13 @@ export function TodoMVC() {
 
   const save = useCallback(
     ({ id: todoId }, { title: newTitle }) =>
-      ({ title: newTitle }) =>
-        setTodos((prev) =>
-          findAndReplace(
-            prev,
-            ({ id }) => id === todoId,
-            (todo) => ({ ...todo, title: newTitle })
-          )
-        ) && setEditing(null),
+      setTodos((prev) =>
+        findAndReplace(
+          prev,
+          ({ id }) => id === todoId,
+          (todo) => ({ ...todo, title: newTitle })
+        )
+      ) && setEditing(null),
     []
   );
 
@@ -159,7 +153,7 @@ export function TodoMVC() {
                   key={todo.id}
                   todo={todo}
                   isEditing={editing === todo.id}
-                  onToggle={toggle}
+                  onToggle={toggle(todo)}
                   onDestroy={destroy}
                   onEdit={editingTodo}
                   onSave={save}
