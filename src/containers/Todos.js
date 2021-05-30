@@ -153,7 +153,7 @@ export function TodoMVC() {
                   key={todo.id}
                   todo={todo}
                   isEditing={editing === todo.id}
-                  onToggle={toggle(todo)}
+                  onToggle={toggle}
                   onDestroy={destroy}
                   onEdit={editingTodo}
                   onSave={save}
