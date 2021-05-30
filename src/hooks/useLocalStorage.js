@@ -7,10 +7,10 @@ export function useLocalStorage(key, fallback = "") {
 
   // content is the new value
 
-  const setStore = value => localStorage.setItem(key, JSON.stringify(value));
+  const setStore = (value) => localStorage.setItem(key, JSON.stringify(value));
 
   useEffect(() => {
-    const handler = e => {
+    const handler = (e) => {
       setValue(JSON.parse(e.newValue));
     };
     window.addEventListener("storage", handler);
@@ -19,5 +19,3 @@ export function useLocalStorage(key, fallback = "") {
 
   return [value, setStore];
 }
-
-export default useLocalStorage;

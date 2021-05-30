@@ -3,30 +3,30 @@ import { ENTER_KEY, ESCAPE_KEY, NONE } from "../constants";
 
 export function TodoItem({
   todo,
+  isEditing,
   onToggle,
   onDestroy,
   onEdit,
-  editing,
   onSave,
   onCancel
 }) {
   const [editText, setEditText] = useState("");
 
   const handleEdit = () => {
-    onEdit();
+    onEdit(todo);
     setEditText(todo.title);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     const newTitle = editText.trim();
     if (newTitle) {
-      onSave({ title: newTitle });
+      onSave(todo, { title: newTitle });
       return setEditText(newTitle);
     }
-    return onDestroy();
+    return onDestroy(todo);
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.which === ESCAPE_KEY) {
       setEditText(todo.title);
       return onCancel();
@@ -34,8 +34,8 @@ export function TodoItem({
     return e.which === ENTER_KEY && handleSubmit(e);
   };
 
-  const handleChange = e => {
-    if (editing) {
+  const handleChange = (e) => {
+    if (isEditing) {
       return setEditText(e.target.value);
     }
   };
@@ -43,7 +43,7 @@ export function TodoItem({
   return (
     <li
       className={`${todo.completed ? "completed" : NONE} ${
-        editing ? "editing" : NONE
+        isEditing ? "editing" : NONE
       }`}
     >
       <div className="view">
@@ -51,10 +51,10 @@ export function TodoItem({
           className="toggle"
           type="checkbox"
           checked={todo.completed}
-          onChange={onToggle}
+          onChange={() => onToggle(todo)}
         />
         <label onDoubleClick={handleEdit}>{todo.title}</label>
-        <button className="destroy" onClick={onDestroy} />
+        <button className="destroy" onClick={() => onDestroy(todo)} />
       </div>
       <input
         className="edit"
@@ -67,4 +67,4 @@ export function TodoItem({
   );
 }
 
-export default React.memo(TodoItem);
+TodoItem.displayName = "TodoItem";

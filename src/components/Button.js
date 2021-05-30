@@ -7,5 +7,3 @@ export function Button({ label, clickHandler, cls }) {
     </button>
   );
 }
-
-export default React.memo(Button);

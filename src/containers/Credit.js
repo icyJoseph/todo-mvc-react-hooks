@@ -37,5 +37,3 @@ export function Credit() {
     </div>
   );
 }
-
-export default React.memo(Credit);
